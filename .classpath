@@ -13,6 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/hugob/Downloads/opencsv-5.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/m49au/OneDrive/Bureau/I2/LD/JEE/Projet/opencsv-5.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/m49au/OneDrive/Bureau/I2/LD/JEE/Projet/jstl-1.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
