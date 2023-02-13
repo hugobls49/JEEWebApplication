@@ -7,6 +7,11 @@
 <title>Serv1</title>
 </head>
 <body>
+
+	<form action="Serv2">
+    	<input type="submit" value="Aller à la page Team">
+	</form>
+    
     <c:if test="${ !empty fichier }"><p><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
     <form method="post" action="index" enctype="multipart/form-data">
         <p>
@@ -20,6 +25,8 @@
         
         <input type="submit" />
     </form>
+    
+    
     
 </body>
 </html>

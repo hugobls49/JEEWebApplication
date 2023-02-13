@@ -11,14 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.Part; 
 
 //import com.octest.forms.ConnectionForm;
 
 /**
  * Servlet implementation class Test
  */
-@WebServlet("/serv1")
+@WebServlet("/Serv1")
 public class Serv1 extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -30,11 +30,13 @@ public class Serv1 extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+    
     }
-
+    @Override
     public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         // On récupère le champ description comme d'habitude
         String description = request.getParameter("description");
@@ -60,6 +62,7 @@ public class Serv1 extends HttpServlet {
         }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+        
     }
 
     private void ecrireFichier( Part part, String nomFichier, String chemin ) throws IOException {
