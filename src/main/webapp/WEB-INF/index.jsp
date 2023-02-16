@@ -8,23 +8,35 @@
 </head>
 <body>
 
-	<form action="Serv2">
-    	<input type="submit" value="Aller à la page Team">
-	</form>
-    
-    <c:if test="${ !empty fichier }"><p><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
-    <form method="post" action="index" enctype="multipart/form-data">
-        <p>
-            <label for="description">Description du fichier : </label>
-            <input type="text" name="description" id="description" />
-        </p>
-        <p>
-            <label for="fichier">Fichier à envoyer : </label>
-            <input type="file" name="fichier" id="fichier" />
-        </p>
-        
-        <input type="submit" />
+	<h1>Créer des étudiants</h1>
+    <form action="Serv1?id=2">
+      <label for="nom">Nom:</label>
+      <input type="text" id="nom" name="nom" required><br><br>
+      <label for="prenom">Prénom:</label>
+      <input type="text" id="prenom" name="prenom" required><br><br>
+      <label for="genre">Genre:</label>
+      <input type="radio" id="genre" name="genre" value="f" required>Femme
+      <input type="radio" id="genre" name="genre" value="h" required>Homme<br><br>
+      <label for="site">Site précédent:</label>
+      <input type="text" id="site" name="site" required><br><br>
+      <label for="formation">Formation précédente:</label>
+      <input type="text" id="formation" name="formation" required><br><br>
+      <input type="submit" value="Ajouter">
     </form>
+ 
+ 	<h1>Importer une liste d'étudiants</h1>
+	  	<form action="Serv1?id=1" method="post" enctype="multipart/form-data">
+	    <label for="csv-file">Ajouter une liste d'étudiants :</label>
+	    <input type="file" id="csv-file" name="csv-file" accept=".csv">
+	    <button type="submit">Importer</button>
+ 	 </form>
+ 	 
+    <h1>Changer de page</h1>
+	<form method="POST" action="Serv1?id=0">
+		 <button name='buttonPage' type='submit' value='Team'>Team Page</button>
+	 </form>
+	 
+   
     
     
     
