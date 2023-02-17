@@ -6,18 +6,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ChangePage implements Action{
+public class ChangePage1 implements Action{
 	
 	
 	
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response)
+	public HttpServletRequest execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String buttonPage = request.getParameter("buttonPage");
         if(buttonPage.equals("Team")) {
-        	return "/WEB-INF/team.jsp";
+        	request.getRequestDispatcher("/WEB-INF/team.jsp").forward(request, response);
+        	return request;
         }
-		return "/WEB-INF/index.jsp";
+        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+		return request;
 	}
 
 }

@@ -15,7 +15,7 @@ import com.opencsv.CSVReader;
 public class ImportCSV implements Action{
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response)
+	public List<Etudiant> execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
         String cheminFichier = "\\I2\\LD\\JEE\\Projet\\CSV_FILES\\test.csv";
         List<Etudiant> etudiants = new ArrayList<Etudiant>();
@@ -38,7 +38,9 @@ public class ImportCSV implements Action{
         } catch (Exception e) {
             // Gérer les erreurs
         }
-		return null;
+        
+        //il faut return un type HttpServletRequest dans la même idée que Change Page
+		return etudiants;
 	}
 
 }
