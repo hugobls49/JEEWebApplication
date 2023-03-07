@@ -24,7 +24,6 @@ public class Serv1 extends HttpServlet {
        
     public Serv1() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     @Override
