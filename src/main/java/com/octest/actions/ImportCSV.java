@@ -61,7 +61,7 @@ public class ImportCSV implements Action{
 				etudiant.setIdGender(Integer.parseInt(parts[3]));
 				etudiant.setIdSite(Integer.parseInt(parts[4]));
 				etudiant.setIdFormation(Integer.parseInt(parts[5]));
-				etudiant.setIdFormation(0);
+				etudiant.setIdTeam(0);
 				
 				etudiants.add(etudiant);
 			}

@@ -8,4 +8,6 @@ public interface StudentDao {
 	void deleteStudent();
     void ajouterStudents( List<Student>  students );
     List<Student> lister();
+    void ajouter( Student student );
 }
+
