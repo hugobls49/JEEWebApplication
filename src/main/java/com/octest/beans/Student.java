@@ -66,4 +66,41 @@ public class Student {
     public void setIdTeam(int idTeam) {
         this.idTeam = idTeam;
     }
+    
+    public String getString() {
+    	
+    	String genre;
+    	String site;
+    	String formation;
+    	
+    	if(this.idGender == 0) {
+    		genre = "homme";
+    	}
+    	else {
+    		genre = "femme";
+    	}
+    	
+    	if(this.idSite == 0) {
+    		site = "Angers";
+    	}else if(this.idSite == 1){
+    		site = "Paris";
+    	}else {
+    		site = "Dijon";
+    	}
+    	
+    	if(this.idSite == 0) {
+    		formation = "P1";
+    	}else if(this.idSite == 1){
+    		formation = "P2";
+    	}else if(this.idSite == 2){
+    		formation = "E3e";
+    	}else if(this.idSite == 3){
+    		formation = "E4e";
+    	}else{
+    		formation = "E5e";
+    	}
+    	
+		return this.getFirstName() + " " + this.getName() + " est un " + genre + " à " + site + " en " + formation;
+    	
+    }
 }

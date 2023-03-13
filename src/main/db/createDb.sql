@@ -5,12 +5,6 @@ CREATE TABLE Team (
   idTeam INT PRIMARY KEY,
   Name VARCHAR(255)
 );
-INSERT INTO Team VALUES(0,'Equipe1');
-INSERT INTO Team VALUES(1,'Equipe2');
-INSERT INTO Team VALUES(2,'Equipe3');
-INSERT INTO Team VALUES(3,'Equipe4');
-INSERT INTO Team VALUES(4,'Equipe5');
-
 CREATE TABLE Formation (
   idFormation INT PRIMARY KEY,
   Name VARCHAR(255)
@@ -37,17 +31,16 @@ INSERT INTO Gender VALUES(0,'h');
 INSERT INTO Gender VALUES(1,'f');
 
 CREATE TABLE Student (
-  idStudent INT PRIMARY KEY,
+  idStudent INT NOT NULL AUTO_INCREMENT,
   Name VARCHAR(255),
   FirstName VARCHAR(255),
   idGender INT,
   idSite INT,
   idFormation INT,
   idTeam INT,
+  PRIMARY KEY(idStudent),
   FOREIGN KEY (idGender) REFERENCES Gender(idGender),
   FOREIGN KEY (idSite) REFERENCES Site(idSite),
   FOREIGN KEY (idFormation) REFERENCES Formation(idFormation),
   FOREIGN KEY (idTeam) REFERENCES Team(idTeam)
 );
-INSERT INTO Student VALUES(0,'AUMONT', 'Maxime', 0, 0, 2, 0);
-INSERT INTO Student VALUES(1,'BLOIS', 'Hugo', 0, 0, 2, 0);
