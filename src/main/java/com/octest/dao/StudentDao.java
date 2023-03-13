@@ -6,6 +6,11 @@ import com.octest.beans.Student;
 
 public interface StudentDao {
 	void deleteStudent();
-    void ajouterStudents( List<Student>  students );
-    List<Student> lister();
+  void ajouterStudents( List<Student>  students );
+  List<Student> lister();
+	void ajouter( Student student );
+
+
 }
+
+

@@ -18,13 +18,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.octest.actions.Action;
+import com.octest.actions.AjouterEtudiant;
 import com.octest.actions.ChangePage1;
 import com.octest.actions.ChangePage2;
 import com.octest.actions.ImportCSV;
+
 import com.octest.beans.Student;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+
+import com.octest.dao.DaoFactory;
+
 
 /**
  * Servlet implementation class Test
@@ -45,10 +50,12 @@ public class Serv1 extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
+    
     super.init();
     actionMap.put("0", new ChangePage1());
     actionMap.put("1", new ImportCSV());
     actionMap.put("2", new ChangePage2());
+    actionMap.put("3", new AjouterEtudiant());
     }
     
     @Override
@@ -71,10 +78,11 @@ public class Serv1 extends HttpServlet {
 
         if(action != null) {
         	response = (HttpServletResponse) action.execute(request, response);
-        	if (action instanceof ImportCSV) {
+        	if (action instanceof ImportCSV || action instanceof AjouterEtudiant) {
         		request.setAttribute("fichierEnvoye", true);
                 request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
         	}
         }
+
     }
 }
