@@ -60,13 +60,12 @@
 	    <button type="submit">Importer</button>
  	 </form>
  	 
+ 	 <c:if test="${ fichierEnvoye }"><p><c:out value="Le fichier a été uploadé !" /></p></c:if>
+ 	 
     <h1>Changer de page</h1>
 	<form method="POST" action="Serv1?id=0">
 		 <button name='buttonPage' type='submit' value='Team'>Team Page</button>
 	 </form>
-	 
-   
-    
     
     
 </body>
