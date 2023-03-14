@@ -1,12 +1,7 @@
 package com.octest.servlets;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -19,21 +14,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.octest.actions.Action;
 
 import com.octest.actions.ActualiserStudentWithoutTeam;
+import com.octest.actions.ActualiserStudentWithoutTeamAndTeam;
 import com.octest.actions.AfficherEtudiantParEquipe;
 import com.octest.actions.AjouterEtudiant;
+import com.octest.actions.AjouterEtudiantEquipe;
 import com.octest.actions.ChangePage1;
 import com.octest.actions.ChangePage2;
+import com.octest.actions.ComposerEquipeOrdreAlphabétique;
 import com.octest.actions.ComposerEquipes;
 import com.octest.actions.ImportCSV;
+
+import com.octest.actions.ModifierNomEquipe;
+import com.octest.actions.RetirerEtudiantEquipe;
+
 import com.octest.actions.ExportCSV;
+
 import com.octest.actions.selectNbTeam;
-import com.octest.beans.Student;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
-
-
-import com.octest.dao.DaoFactory;
 
 
 /**
@@ -65,7 +61,14 @@ public class Serv1 extends HttpServlet {
     actionMap.put("5", new ActualiserStudentWithoutTeam());
     actionMap.put("6", new ComposerEquipes());
     actionMap.put("7", new AfficherEtudiantParEquipe());
+    actionMap.put("8", new AjouterEtudiantEquipe());
+    actionMap.put("9", new ActualiserStudentWithoutTeamAndTeam());
+    actionMap.put("10", new RetirerEtudiantEquipe());
     actionMap.put("11", new ExportCSV());
+    actionMap.put("12", new ModifierNomEquipe());
+    actionMap.put("13", new ComposerEquipeOrdreAlphabétique());
+
+  
     }
     
     @Override
@@ -89,16 +92,15 @@ public class Serv1 extends HttpServlet {
 
         if(action != null) {
         	response = (HttpServletResponse) action.execute(request, response);
-        	if (action instanceof AjouterEtudiant) {
+        	if (action instanceof AjouterEtudiant || action instanceof ImportCSV) {
                 request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
             }
             
-          if (action instanceof ImportCSV ) {
-                request.setAttribute("fichierEnvoye", true);
-                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-            }
-            
-        	if (action instanceof selectNbTeam || action instanceof ActualiserStudentWithoutTeam || action instanceof ComposerEquipes || action instanceof AfficherEtudiantParEquipe) {
+        	if (action instanceof selectNbTeam || action instanceof ActualiserStudentWithoutTeam 
+        			|| action instanceof ComposerEquipes || action instanceof AfficherEtudiantParEquipe
+        			|| action instanceof AjouterEtudiantEquipe || action instanceof ActualiserStudentWithoutTeamAndTeam
+        			|| action instanceof RetirerEtudiantEquipe || action instanceof ModifierNomEquipe
+        			|| action instanceof ComposerEquipeOrdreAlphabétique) {
                 request.getRequestDispatcher("/WEB-INF/team.jsp").forward(request, response);
             }
             

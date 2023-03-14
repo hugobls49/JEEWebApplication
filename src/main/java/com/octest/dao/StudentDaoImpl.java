@@ -1,6 +1,10 @@
 package com.octest.dao;
 
 import java.sql.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import java.util.List;
 
 import com.octest.beans.Student;
@@ -115,6 +119,9 @@ public void ajouter(Student student) {
                 student.setIdFormation(resultSet.getInt("idFormation"));
                 students.add(student);
             }
+            
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -200,6 +207,97 @@ public void ajouter(Student student) {
         }
     }
 
+
+	@Override
+	public void addStudentToTeam(int studentId, int teamId) throws DaoException {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    
+	    try {
+	        connection = daoFactory.getConnection();
+	        preparedStatement = connection.prepareStatement("UPDATE Student SET idTeam = ? WHERE idStudent = ? AND idTeam IS NULL");
+	        preparedStatement.setInt(1, teamId);
+	        preparedStatement.setInt(2, studentId);
+	        preparedStatement.executeUpdate();
+	        
+	        // Retirer le Student de la liste getStudentWithoutTeam
+	        List<Student> students = getStudentsWithoutTeam();
+	        for (Iterator<Student> iterator = students.iterator(); iterator.hasNext();) {
+	            Student student = iterator.next();
+	            if (student.getIdStudent() == studentId) {
+	                iterator.remove();
+	                break;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        throw new DaoException("Erreur lors de l'ajout de l'étudiant à l'équipe.", e);
+	    } finally {
+	        try {
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            throw new DaoException("Impossible de fermer la connexion à la base de données", e);
+	        }
+	    }
+	}
+
+	@Override
+	public void removeStudentFromTeam(int studentId) throws DaoException {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    
+	    try {
+	        connection = daoFactory.getConnection();
+	        preparedStatement = connection.prepareStatement("UPDATE Student SET idTeam = null WHERE idStudent = ?");
+	        preparedStatement.setInt(1, studentId);
+	        preparedStatement.executeUpdate();
+	    } catch (SQLException e) {
+	        throw new DaoException("Erreur lors du retrait de l'étudiant de l'équipe.", e);
+	    } finally {
+	        try {
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            throw new DaoException("Impossible de fermer la connexion à la base de données", e);
+	        }
+	    }
+	}
+
+	@Override
+	public List<Student> getStudentsWithoutTeamOrderedByName() {
+		 List<Student> students = new ArrayList<>();
+	        try (Connection connection = daoFactory.getConnection();
+	             PreparedStatement statement = connection.prepareStatement(
+	                "SELECT idStudent, Name, FirstName, idGender, idSite, idFormation FROM Student WHERE idTeam IS NULL ORDER BY Name ASC, FirstName ASC");
+	             ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Student student = new Student();
+	                student.setIdStudent(resultSet.getInt("idStudent"));
+	                student.setName(resultSet.getString("Name"));
+	                student.setFirstName(resultSet.getString("FirstName"));
+	                student.setIdGender(resultSet.getInt("idGender"));
+	                student.setIdSite(resultSet.getInt("idSite"));
+	                student.setIdFormation(resultSet.getInt("idFormation"));
+	                students.add(student);
+	            }
+	            
+	            statement.close();
+	            connection.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return students;
+	    }
+	
+
 @Override
 public ResultSet  selectionTousLesEtudiants() {
 	Connection connexion = null;
@@ -216,4 +314,5 @@ public ResultSet  selectionTousLesEtudiants() {
 	}
     return null;
 }
+
 }

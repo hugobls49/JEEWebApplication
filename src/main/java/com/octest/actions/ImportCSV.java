@@ -27,13 +27,15 @@ public class ImportCSV implements Action {
 	public Object execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Part part = request.getPart("csv-file");
-		if (part != null) {
-			InputStream stream = part.getInputStream();
-			List<Student> etudiants = this.importeFichier(stream);
-		}
+				
+        Part part = request.getPart("csv-file");
+        if(part != null) {
+    		InputStream stream = part.getInputStream();
+    		List<Student> etudiants = this.importeFichier(stream);
+        }
+        request.setAttribute("fichierEnvoye", true);
+        return response;
 
-		return response;
 	}
 
 	private ArrayList<Student> importeFichier(InputStream fichier) {

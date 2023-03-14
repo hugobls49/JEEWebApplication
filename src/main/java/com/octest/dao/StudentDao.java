@@ -13,6 +13,10 @@ public interface StudentDao {
 	void ajouter(Student student);
 	List<Student> lister();
 	List<Student> getStudentsWithoutTeam();
+	List<Student> getStudentsWithoutTeamOrderedByName();
 	List<Student> getStudentsByTeam() throws DaoException;
-  
+
+	void  addStudentToTeam(int studentId, int teamId) throws DaoException;
+	void removeStudentFromTeam(int studentId) throws DaoException;
 }
+
