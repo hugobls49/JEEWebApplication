@@ -1,14 +1,22 @@
 package com.octest.servlets;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
 import com.octest.actions.Action;
 import com.octest.actions.ActualiserStudentWithoutTeam;
 import com.octest.actions.AfficherEtudiantParEquipe;
@@ -18,11 +26,23 @@ import com.octest.actions.ChangePage2;
 import com.octest.actions.ComposerEquipes;
 import com.octest.actions.ImportCSV;
 import com.octest.actions.selectNbTeam;
+import com.octest.beans.Student;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
+
+
 import com.octest.dao.DaoFactory;
+
 
 /**
  * Servlet implementation class Test
  */
+@MultipartConfig(
+	    fileSizeThreshold = 1048576, // 1 Mo
+	    maxFileSize = 10485760, // 10 Mo
+	    maxRequestSize = 52428800 // 5 x 10 Mo
+	)
 @WebServlet("/Serv1")
 public class Serv1 extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -49,12 +69,11 @@ public class Serv1 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-    	
+
     }
     @Override
     public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        processRequest(request,response);
-
+    	processRequest(request,response);
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,18 +87,22 @@ public class Serv1 extends HttpServlet {
 
         if(action != null) {
         	response = (HttpServletResponse) action.execute(request, response);
-        	if (action instanceof ImportCSV || action instanceof AjouterEtudiant) {
+        	if (action instanceof AjouterEtudiant) {
                 request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
             }
+            
+          if (action instanceof ImportCSV ) {
+                request.setAttribute("fichierEnvoye", true);
+                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+            }
+            
         	if (action instanceof selectNbTeam || action instanceof ActualiserStudentWithoutTeam || action instanceof ComposerEquipes || action instanceof AfficherEtudiantParEquipe) {
                 request.getRequestDispatcher("/WEB-INF/team.jsp").forward(request, response);
-                
             }
+            
+        		
+        	
         }
-        
-        
-        
-    }
 
-   
+    }
 }
