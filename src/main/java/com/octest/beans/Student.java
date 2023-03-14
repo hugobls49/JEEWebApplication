@@ -23,6 +23,16 @@ public class Student {
         this.idTeam = idTeam;
     }
     
+    public Student(String name, String firstName, int idGender, int idSite, int idFormation, int idTeam) {
+        
+        this.name = name;
+        this.firstName = firstName;
+        this.idGender = idGender;
+        this.idSite = idSite;
+        this.idFormation = idFormation;
+        this.idTeam = idTeam;
+    }
+    
   
     public int getIdStudent() {
         return idStudent;

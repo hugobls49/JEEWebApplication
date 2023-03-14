@@ -6,7 +6,7 @@ import com.octest.beans.Student;
 
 public interface StudentDao {
 	void ajouter( Student student );
-//	List<Student> lister();
-
+	List<Student> getStudentsWithoutTeam();
+	List<Student> getStudentsByTeam() throws DaoException;
 }
 

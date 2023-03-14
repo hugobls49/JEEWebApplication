@@ -35,4 +35,9 @@ public class DaoFactory {
     public StudentDao StudentDao() {
         return new StudentDaoImpl(this);
     }
+    
+    public TeamDao TeamDao() {
+		return new TeamDaoImpl(this);
+        
+    }
 }
