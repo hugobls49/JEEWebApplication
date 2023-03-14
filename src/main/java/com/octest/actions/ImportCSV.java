@@ -20,12 +20,13 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
-public class ImportCSV implements Action{
-	
+public class ImportCSV implements Action {
+
 	private StudentDao studentDao;
-	
+
 	public Object execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 				
         Part part = request.getPart("csv-file");
         if(part != null) {
@@ -34,24 +35,22 @@ public class ImportCSV implements Action{
         }
         request.setAttribute("fichierEnvoye", true);
         return response;
-	}
-	
 
-	private ArrayList<Student> importeFichier(InputStream fichier){
-		
+	}
+
+	private ArrayList<Student> importeFichier(InputStream fichier) {
+
 		List<Student> etudiants = new ArrayList<Student>();
-		
-		try (
-			InputStreamReader filereader = new InputStreamReader(fichier);
-			CSVReader csvReader = new CSVReaderBuilder(filereader).withSkipLines(1).build();
-				) {
+
+		try (InputStreamReader filereader = new InputStreamReader(fichier);
+				CSVReader csvReader = new CSVReaderBuilder(filereader).withSkipLines(1).build();) {
 
 			List<String[]> toutesLesLignes = csvReader.readAll();
 
 			for (String[] ligne : toutesLesLignes) {
-				
+
 				Student etudiant = new Student();
-				
+
 				String input = ligne[0];
 				String[] parts = input.split(";");
 
@@ -61,11 +60,11 @@ public class ImportCSV implements Action{
 				etudiant.setIdGender(Integer.parseInt(parts[3]));
 				etudiant.setIdSite(Integer.parseInt(parts[4]));
 				etudiant.setIdFormation(Integer.parseInt(parts[5]));
-				etudiant.setIdFormation(0);
-				
+				etudiant.setIdTeam(0);
+
 				etudiants.add(etudiant);
 			}
-			
+
 			DaoFactory daoFactory = DaoFactory.getInstance();
 			this.studentDao = daoFactory.StudentDao();
 			this.studentDao.deleteStudent();
@@ -81,6 +80,5 @@ public class ImportCSV implements Action{
 
 		return (ArrayList<Student>) etudiants;
 	}
-	
-	
+
 }

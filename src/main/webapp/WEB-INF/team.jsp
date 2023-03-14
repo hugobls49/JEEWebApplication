@@ -202,6 +202,13 @@
 		<input type="submit" value="Modifier">
 	</form>
 
+	
+
+	<h2>Exporter les équipes constituées</h2>
+  <form method="POST" action="Serv1?id=11">
+		<button id="btn-exporter-equipes">Exporter les équipes</button>
+	</form>
+
 	<h2>Changer de page</h2>
 	<form method="POST" action="Serv1?id=2">
 		<button name='buttonPage' type='submit' value='Index'>Index

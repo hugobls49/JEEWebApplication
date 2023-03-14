@@ -1,8 +1,10 @@
 package com.octest.dao;
 
 import java.sql.*;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import java.util.List;
 
 import com.octest.beans.Student;
@@ -169,6 +171,42 @@ public void ajouter(Student student) {
 	    
 	    return students;
 	}
+  
+        try {
+            connexion = daoFactory.getConnection();
+
+            if (connexion != null) {
+                preparedStatement = connexion.prepareStatement("INSERT INTO Student(Name, FirstName, idGender, idSite, idFormation, idTeam) VALUES(?, ?, ?, ?, ?, null);");
+               if (preparedStatement != null) {
+                    preparedStatement.setString(1, student.getName());
+                    preparedStatement.setString(2, student.getFirstName());
+                    preparedStatement.setInt(3, student.getIdGender());
+                    preparedStatement.setInt(4, student.getIdSite());
+                    preparedStatement.setInt(5, student.getIdFormation());
+                    preparedStatement.executeUpdate();
+                } else {
+                    throw new SQLException("Failed to create PreparedStatement");
+                }
+            } else {
+                throw new SQLException("Failed to create Connection");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fermer la connexion et le preparedStatement
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 	@Override
 	public void addStudentToTeam(int studentId, int teamId) throws DaoException {
@@ -259,6 +297,22 @@ public void ajouter(Student student) {
 	        return students;
 	    }
 	
+
+@Override
+public ResultSet  selectionTousLesEtudiants() {
+	Connection connexion = null;
 	
+    String query = "SELECT * FROM Student";
+	// Exécuter l'instruction SQL et obtenir un ResultSet
+    try {
+		connexion = daoFactory.getConnection();
+	    Statement stmt = connexion.createStatement();
+	    ResultSet rs = stmt.executeQuery(query);
+		return rs;	
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+    return null;
+}
 
 }
