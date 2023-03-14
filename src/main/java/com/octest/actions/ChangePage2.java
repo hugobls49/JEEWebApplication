@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ChangePage2 implements Action{
+public class ChangePage2 implements Action<HttpServletRequest>{
 
 	
 	@Override
@@ -15,10 +15,12 @@ public class ChangePage2 implements Action{
 		String buttonPage = request.getParameter("buttonPage");
         if(buttonPage.equals("Index")) {
         	request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-        	return request;
+        	
+        }else {
+        	request.getRequestDispatcher("/WEB-INF/team.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("/WEB-INF/team.jsp").forward(request, response);
-		return request;
+        
+		return null;
 	}
 
 }

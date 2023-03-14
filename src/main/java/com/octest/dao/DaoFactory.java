@@ -22,8 +22,9 @@ public class DaoFactory {
 
         }
 
-        DaoFactory instance = new DaoFactory(
-                "jdbc:mysql://localhost:3306/projetjavaee", "root", "network");
+        DaoFactory instance = new DaoFactory("jdbc:mysql://localhost:3306/ProjetJavaEE", "root", "network");
+
+
         return instance;
     }
 
@@ -34,5 +35,10 @@ public class DaoFactory {
     // Récupération du Dao
     public StudentDao StudentDao() {
         return new StudentDaoImpl(this);
+    }
+    
+    public TeamDao TeamDao() {
+		return new TeamDaoImpl(this);
+        
     }
 }

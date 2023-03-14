@@ -29,7 +29,7 @@ public class AjouterEtudiant implements Action {
             int idGender = Integer.parseInt(request.getParameter("idGender"));
             int idSite = Integer.parseInt(request.getParameter("idSite"));
             int idFormation = Integer.parseInt(request.getParameter("idFormation"));
-           
+
             student.setName(name);
             student.setFirstName(firstName);
             student.setIdGender(idGender);
