@@ -6,7 +6,8 @@ import java.util.List;
 import com.octest.beans.Student;
 
 public class StudentDaoImpl implements StudentDao {
-    private DaoFactory daoFactory;
+    
+	private DaoFactory daoFactory;
 
     StudentDaoImpl(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -67,14 +68,13 @@ public void ajouter(Student student) {
             connexion = daoFactory.getConnection();
 
             if (connexion != null) {
-                preparedStatement = connexion.prepareStatement("INSERT INTO Student(Name, FirstName, idGender, idSite, idFormation, idTeam) VALUES(?, ?, ?, ?, ?, ?);");
-                if (preparedStatement != null) {
+                preparedStatement = connexion.prepareStatement("INSERT INTO Student(Name, FirstName, idGender, idSite, idFormation, idTeam) VALUES(?, ?, ?, ?, ?, null);");
+               if (preparedStatement != null) {
                     preparedStatement.setString(1, student.getName());
                     preparedStatement.setString(2, student.getFirstName());
                     preparedStatement.setInt(3, student.getIdGender());
                     preparedStatement.setInt(4, student.getIdSite());
                     preparedStatement.setInt(5, student.getIdFormation());
-                    preparedStatement.setInt(6, student.getIdTeam());
                     preparedStatement.executeUpdate();
                 } else {
                     throw new SQLException("Failed to create PreparedStatement");
@@ -98,4 +98,21 @@ public void ajouter(Student student) {
             }
         }
     }
+
+@Override
+public ResultSet  selectionTousLesEtudiants() {
+	Connection connexion = null;
+	
+    String query = "SELECT * FROM Student";
+	// Exécuter l'instruction SQL et obtenir un ResultSet
+    try {
+		connexion = daoFactory.getConnection();
+	    Statement stmt = connexion.createStatement();
+	    ResultSet rs = stmt.executeQuery(query);
+		return rs;	
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+    return null;
+}
 }

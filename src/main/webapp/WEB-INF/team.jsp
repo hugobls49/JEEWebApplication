@@ -68,7 +68,9 @@
 
 	<!-- Exporter les équipes constituées dans un fichier CSV une fois tous les étudiants affectés -->
 	<h2>Exporter les équipes constituées</h2>
-	<button id="btn-exporter-equipes">Exporter les équipes</button>
+	<form method="POST" action="Serv1?id=4">
+		<button id="btn-exporter-equipes">Exporter les équipes</button>
+	</form>
 	
 	<h1>Changer de page</h1>
 	<form method="POST" action="Serv1?id=2">

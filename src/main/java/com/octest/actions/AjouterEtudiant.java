@@ -29,24 +29,16 @@ public class AjouterEtudiant implements Action {
             int idGender = Integer.parseInt(request.getParameter("idGender"));
             int idSite = Integer.parseInt(request.getParameter("idSite"));
             int idFormation = Integer.parseInt(request.getParameter("idFormation"));
-            int idTeam = Integer.parseInt(request.getParameter("idTeam"));
-
            
             student.setName(name);
             student.setFirstName(firstName);
             student.setIdGender(idGender);
             student.setIdSite(idSite);
             student.setIdFormation(idFormation);
-            student.setIdTeam(idTeam);
-
+            student.setIdTeam(0);
             
             studentDao.ajouter(student);
-            
-            
         }
-		
-		
-		
 		return response;
 	}
 

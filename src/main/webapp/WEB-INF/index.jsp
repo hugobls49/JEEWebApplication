@@ -8,23 +8,44 @@
 </head>
 <body>
 
-	<h1>Créer des étudiants</h1>
-    <form action="Serv1?id=2">
-      <label for="nom">Nom:</label>
-      <input type="text" id="nom" name="nom" required><br><br>
-      <label for="prenom">Prénom:</label>
-      <input type="text" id="prenom" name="prenom" required><br><br>
-      <label for="genre">Genre:</label>
-      <input type="radio" id="genre" name="genre" value="f" required>Femme
-      <input type="radio" id="genre" name="genre" value="h" required>Homme<br><br>
-      <label for="site">Site précédent:</label>
-      <input type="text" id="site" name="site" required><br><br>
-      <label for="formation">Formation précédente:</label>
-      <input type="text" id="formation" name="formation" required><br><br>
-      <input type="submit" value="Ajouter">
-    </form>
- 
- 	<h1>Importer une liste d'étudiants</h1>
+	<h1>Ajouter un étudiant</h1>
+<form action="Serv1?id=3" method="POST">
+    <label for="nom">Nom:</label> 
+    <input type="text" id="nom" name="Name" required><br>
+    <br> 
+    <label for="prenom">Prénom:</label> 
+    <input type="text" id="prenom" name="FirstName" required><br>
+    <br> 
+    <label for="genre">Genre:</label> 
+    <input type="radio" id="genre" name="idGender" value="0" required>H 
+    <input type="radio" id="genre" name="idGender" value="1" required>F<br>
+    <br> 
+    <label for="site">Site précédent:</label> 
+    <select id="site" name="idSite" required>
+        <option value="">--Choisir un site--</option>
+        <option value="0">Angers</option>
+        <option value="1">Paris</option>
+        <option value="2">Dijon</option>
+    </select><br>
+    <br> 
+    <label for="formation">Formation précédente:</label> 
+    <select id="formation" name="idFormation" required>
+        <option value="">--Choisir une formation--</option>
+        <option value="0">P1</option>
+        <option value="1">P2</option>
+        <option value="2">E3e</option>
+        <option value="3">E4e</option>
+        <option value="4">E5e</option>
+    </select><br>
+    <br> 
+
+    <input type="submit" name="ajouter" value="Ajouter">
+</form>
+
+ 	 <c:if test="${ etudiantAjoute }"><p><c:out value="L'étudiant a été uploadé !" /></p></c:if>
+
+
+	<h1>Importer une liste d'étudiants</h1>
 	  	<form action="Serv1?id=1" method="post" enctype="multipart/form-data">
 	    <label for="csv-file">Ajouter une liste d'étudiants :</label>
 	    <input type="file" id="csv-file" name="csv-file" accept=".csv">
