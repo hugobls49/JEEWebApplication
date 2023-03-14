@@ -42,7 +42,7 @@
     <input type="submit" name="ajouter" value="Ajouter">
 </form>
 
-
+ 	 <c:if test="${ etudiantAjoute }"><p><c:out value="L'étudiant a été uploadé !" /></p></c:if>
 
 	<h1>Importer une liste d'étudiants</h1>
 	  	<form action="Serv1?id=1" method="post" enctype="multipart/form-data">

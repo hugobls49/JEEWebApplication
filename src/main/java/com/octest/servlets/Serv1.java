@@ -15,9 +15,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import com.octest.actions.Action;
+
 import com.octest.actions.ActualiserStudentWithoutTeam;
 import com.octest.actions.AfficherEtudiantParEquipe;
 import com.octest.actions.AjouterEtudiant;
@@ -25,6 +25,7 @@ import com.octest.actions.ChangePage1;
 import com.octest.actions.ChangePage2;
 import com.octest.actions.ComposerEquipes;
 import com.octest.actions.ImportCSV;
+import com.octest.actions.ExportCSV;
 import com.octest.actions.selectNbTeam;
 import com.octest.beans.Student;
 import com.opencsv.CSVReader;
@@ -38,13 +39,13 @@ import com.octest.dao.DaoFactory;
 /**
  * Servlet implementation class Test
  */
-@MultipartConfig(
-	    fileSizeThreshold = 1048576, // 1 Mo
-	    maxFileSize = 10485760, // 10 Mo
-	    maxRequestSize = 52428800 // 5 x 10 Mo
-	)
+@MultipartConfig(fileSizeThreshold = 1048576, // 1 Mo
+		maxFileSize = 10485760, // 10 Mo
+		maxRequestSize = 52428800 // 5 x 10 Mo
+)
 @WebServlet("/Serv1")
 public class Serv1 extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
     private Map<String,Action> actionMap = new HashMap<>();
        
@@ -64,6 +65,7 @@ public class Serv1 extends HttpServlet {
     actionMap.put("5", new ActualiserStudentWithoutTeam());
     actionMap.put("6", new ComposerEquipes());
     actionMap.put("7", new AfficherEtudiantParEquipe());
+    actionMap.put("11", new ExportCSV());
     }
     
     @Override
@@ -100,7 +102,9 @@ public class Serv1 extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/team.jsp").forward(request, response);
             }
             
-        		
+          if (action instanceof ExportCSV) {
+            request.getRequestDispatcher("/WEB-INF/team.jsp").forward(request, response);
+          }
         	
         }
 
