@@ -38,16 +38,7 @@
         <option value="4">E5e</option>
     </select><br>
     <br> 
-    <label for="team">Equipe:</label> 
-    <select id="team" name="idTeam">
-        <option value="">--Choisir une équipe--</option>
-        <option value="0">Equipe1</option>
-        <option value="1">Equipe2</option>
-        <option value="2">Equipe3</option>
-        <option value="3">Equipe4</option>
-        <option value="4">Equipe5</option>
-    </select><br>
-    <br> 
+
     <input type="submit" name="ajouter" value="Ajouter">
 </form>
 

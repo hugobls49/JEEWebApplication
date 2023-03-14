@@ -9,7 +9,8 @@ public interface StudentDao {
   void ajouterStudents( List<Student>  students );
   List<Student> lister();
 	void ajouter( Student student );
-
+	List<Student> getStudentsWithoutTeam();
+	List<Student> getStudentsByTeam() throws DaoException;
 
 }
 
