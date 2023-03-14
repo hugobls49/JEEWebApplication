@@ -32,7 +32,7 @@ public class ImportCSV implements Action{
     		InputStream stream = part.getInputStream();
     		List<Student> etudiants = this.importeFichier(stream);
         }
-        
+        request.setAttribute("fichierEnvoye", true);
         return response;
 	}
 	

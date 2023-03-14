@@ -206,6 +206,102 @@ public class TeamDaoImpl implements TeamDao{
 	        
 	        return nbEquipes;
 	    }
+
+
+		@Override
+		public void updateTeamName(int idTeam, String newName) throws DaoException {
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+		    
+		    try {
+		        connection = daoFactory.getConnection();
+		        preparedStatement = connection.prepareStatement("UPDATE Team SET Name = ? WHERE idTeam = ?");
+		        preparedStatement.setString(1, newName);
+		        preparedStatement.setInt(2, idTeam);
+		        preparedStatement.executeUpdate();
+		        
+		    } catch (SQLException e) {
+		        throw new DaoException("Erreur lors de la mise à jour du nom de l'équipe.", e);
+		    } finally {
+		        try {
+		            if (preparedStatement != null) {
+		                preparedStatement.close();
+		            }
+		            if (connection != null) {
+		                connection.close();
+		            }
+		        } catch (SQLException e) {
+		            throw new DaoException("Impossible de fermer la connexion à la base de données", e);
+		        }
+		    }
+		}
+
+
+		@Override
+		public void attribuerEquipesParOdreAlphbétique(int nbEquipes) throws DaoException {
+		    Connection connexion = null;
+		    PreparedStatement preparedStatement = null;
+		    Statement statement = null;
+
+		    try {
+		        connexion = daoFactory.getConnection();
+		        // Commencer une transaction
+		        connexion.setAutoCommit(false);
+
+		        // Récupérer la liste des étudiants sans équipe, triés par ordre alphabétique
+		        StudentDaoImpl studentDaoImpl = new StudentDaoImpl(daoFactory);
+		        List<Student> studentsWithoutTeam = studentDaoImpl.getStudentsWithoutTeamOrderedByName();
+		        int studentsPerTeam = studentsWithoutTeam.size() / nbEquipes;
+
+		        if (studentsWithoutTeam.size() % nbEquipes != 0) {
+		            throw new DaoException("Le nombre d'étudiants ne permet pas une répartition égale dans les équipes.");
+		        }
+
+		        int currentTeam = 1;
+		        int studentCount = 0;
+		        for (Student student : studentsWithoutTeam) {
+		            if (studentCount == studentsPerTeam) {
+		                // Passer à l'équipe suivante
+		                currentTeam++;
+		                studentCount = 0;
+		            }
+		            preparedStatement = connexion.prepareStatement("UPDATE Student SET idTeam=? WHERE idStudent=?");
+		            preparedStatement.setInt(1, currentTeam);
+		            preparedStatement.setInt(2, student.getIdStudent());
+		            preparedStatement.executeUpdate();
+		            student.setIdTeam(currentTeam);
+		            studentCount++;
+		        }
+
+		        // Valider la transaction
+		        connexion.commit();
+		    } catch (SQLException e) {
+		        try {
+		            if (connexion != null) {
+		                connexion.rollback();
+		            }
+		        } catch (SQLException e2) {
+		            throw new DaoException("Impossible de rollback", e2);
+		        }
+		        throw new DaoException("Impossible de communiquer avec la base de données", e);
+		    } finally {
+		        // Fermer la connexion et les statements
+		        try {
+		            if (preparedStatement != null) {
+		                preparedStatement.close();
+		            }
+		            if (statement != null) {
+		                statement.close();
+		            }
+		            if (connexion != null) {
+		                connexion.close();
+		            }
+		        } catch (SQLException e) {
+		            throw new DaoException("Impossible de fermer la connexion à la base de données", e);
+		        }
+		    }
+		}
+
 	    
 	    
 }
